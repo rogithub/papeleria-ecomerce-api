@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Ro.Inventario.Core.Repos;
+using Ro.Inventario.Core.Entities;
 using Ro.Npgsql.Data;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -23,6 +23,8 @@ builder.Services.AddTransient<IDbAsync>((svc) =>
                 return new Database(connString);
             });
 
+builder.Services.AddScoped<IBusquedaProductosRepo, BusquedaProductosRepo>();
+builder.Services.AddScoped<IFotoProductoRepo, FotoProductoRepo>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -35,13 +37,13 @@ if (app.Environment.IsDevelopment())
 }
 
 // Crear grupos de endpoints
-var galeria = app.MapGroup("/api/galeria");
+var productos = app.MapGroup("/api/productos");
 
-galeria.MapGet("/", Galeria.GetAll);
-galeria.MapGet("/{id}", Galeria.GetById);
-galeria.MapPost("/", Galeria.Create);
-galeria.MapPut("/{id}", Galeria.Update);
-galeria.MapDelete("/{id}", Galeria.Delete);
+productos.MapGet("/", Productos.GetAll);
+productos.MapGet("/{id}", Productos.GetById);
+productos.MapPost("/", Productos.Create);
+productos.MapPut("/{id}", Productos.Update);
+productos.MapDelete("/{id}", Productos.Delete);
 
 
 app.Run();
@@ -49,7 +51,9 @@ app.Run();
 [JsonSerializable(typeof(ProductoDto))]
 [JsonSerializable(typeof(ProductoDto[]))]
 [JsonSerializable(typeof(List<ProductoDto>))]
-[JsonSerializable(typeof(IEnumerable<ProductoDto>))]
+[JsonSerializable(typeof(ProductoEncontrado))]
+[JsonSerializable(typeof(WebFileInfo))]
+[JsonSerializable(typeof(IEnumerable<WebFileInfo>))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }
