@@ -34,31 +34,22 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-Todo[] sampleTodos =
-[
-    new(1, "Walk the dog"),
-    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
-    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
-    new(4, "Clean the bathroom"),
-    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
-];
+// Crear grupos de endpoints
+var galeria = app.MapGroup("/api/galeria");
 
-var todosApi = app.MapGroup("/todos");
-todosApi.MapGet("/", () => sampleTodos)
-        .WithName("GetTodos");
+galeria.MapGet("/", Galeria.GetAll);
+galeria.MapGet("/{id}", Galeria.GetById);
+galeria.MapPost("/", Galeria.Create);
+galeria.MapPut("/{id}", Galeria.Update);
+galeria.MapDelete("/{id}", Galeria.Delete);
 
-todosApi.MapGet("/{id}", Results<Ok<Todo>, NotFound> (int id) =>
-    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
-        ? TypedResults.Ok(todo)
-        : TypedResults.NotFound())
-    .WithName("GetTodoById");
 
 app.Run();
 
-public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
-
-[JsonSerializable(typeof(Todo[]))]
+[JsonSerializable(typeof(ProductoDto))]
+[JsonSerializable(typeof(ProductoDto[]))]
+[JsonSerializable(typeof(List<ProductoDto>))]
+[JsonSerializable(typeof(IEnumerable<ProductoDto>))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
-
 }
