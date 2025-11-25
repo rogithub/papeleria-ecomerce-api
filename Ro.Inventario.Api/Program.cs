@@ -25,6 +25,8 @@ builder.Services.AddTransient<IDbAsync>((svc) =>
 
 builder.Services.AddScoped<IBusquedaProductosRepo, BusquedaProductosRepo>();
 builder.Services.AddScoped<IFotoProductoRepo, FotoProductoRepo>();
+builder.Services.AddScoped<IUrlContentProductRepo, UrlContentProductRepo>();
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -41,9 +43,6 @@ var productos = app.MapGroup("/api/productos");
 
 productos.MapGet("/", Productos.GetAll);
 productos.MapGet("/{id}", Productos.GetById);
-productos.MapPost("/", Productos.Create);
-productos.MapPut("/{id}", Productos.Update);
-productos.MapDelete("/{id}", Productos.Delete);
 
 
 app.Run();
@@ -51,9 +50,7 @@ app.Run();
 [JsonSerializable(typeof(ProductoDto))]
 [JsonSerializable(typeof(ProductoDto[]))]
 [JsonSerializable(typeof(List<ProductoDto>))]
-[JsonSerializable(typeof(ProductoEncontrado))]
-[JsonSerializable(typeof(WebFileInfo))]
-[JsonSerializable(typeof(IEnumerable<WebFileInfo>))]
+[JsonSerializable(typeof(IEnumerable<ProductoDto>))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }
