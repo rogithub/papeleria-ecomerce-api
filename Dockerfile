@@ -2,6 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
+# Instalar dependencias para AOT en ARM64
+RUN apt-get update && apt-get install -y \
+    clang \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copiar archivos de proyecto
 COPY ["Ro.Inventario.Api/Ro.Inventario.Api.csproj", "Ro.Inventario.Api/"]
 COPY nuget.config .
@@ -16,9 +22,9 @@ RUN dotnet publish "Ro.Inventario.Api.csproj" \
     -c Release \
     -o /app/publish    
 
-# Runtime con .NET completo
-FROM mcr.microsoft.com/dotnet/aspnet:10.0
+# Runtime deps (porque es AOT)
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 8080
-ENTRYPOINT ["dotnet", "Ro.Inventario.Api.dll"]
+ENTRYPOINT ["./Ro.Inventario.Api"]
