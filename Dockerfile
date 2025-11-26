@@ -11,22 +11,14 @@ RUN dotnet restore "Ro.Inventario.Api/Ro.Inventario.Api.csproj"
 COPY . .
 WORKDIR "/src/Ro.Inventario.Api"
 
-# Publicar con AOT (genera binario nativo)
+# Publicar SIN AOT
 RUN dotnet publish "Ro.Inventario.Api.csproj" \
     -c Release \
-    -o /app/publish \
-    /p:PublishAot=true
+    -o /app/publish    
 
-# --- Etapa 2: Runtime mínimo ---
-# Con AOT no necesitas el runtime de .NET, solo dependencias del sistema
-FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine AS final
+# Runtime con .NET completo
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
-
-# Copiar el binario compilado
 COPY --from=build /app/publish .
-
-# Exponer puerto
 EXPOSE 8080
-
-# Ejecutar el binario nativo directamente
-ENTRYPOINT ["./Ro.Inventario.Api"]
+ENTRYPOINT ["dotnet", "Ro.Inventario.Api.dll"]
