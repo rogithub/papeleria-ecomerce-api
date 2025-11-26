@@ -4,13 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <!-- Habilitar AOT -->
-    <PublishAot>true</PublishAot>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <StripSymbols>true</StripSymbols>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
+    <InvariantGlobalization>true</InvariantGlobalization>    
   </PropertyGroup>
 
   <ItemGroup>
