@@ -32,7 +32,25 @@ builder.Services.AddScoped<IGaleriaRepo, GaleriaRepo>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(
+            
+            "http://localhost:4200",          // Desarrollo local
+            "https://inventario.xplaya.com"   // Producción
+        )
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
+
 var app = builder.Build();
+
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {

@@ -5,7 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Habilitar AOT -->
     <PublishAot>true</PublishAot>
+    <StripSymbols>true</StripSymbols>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
   </PropertyGroup>
 
   <ItemGroup>
