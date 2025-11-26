@@ -37,4 +37,4 @@ jobs:
           context: . # El contexto es la raíz del repo de la API
           push: true
           platforms: linux/arm64 # ¡Construimos para tu Raspberry Pi!
-          tags: ghcr.io/rogithub/Ro.Inventario.Api:latest
+          tags: ghcr.io/rogithub/ro.inventario.api:latest
