@@ -26,6 +26,7 @@ builder.Services.AddTransient<IDbAsync>((svc) =>
 builder.Services.AddScoped<IBusquedaProductosRepo, BusquedaProductosRepo>();
 builder.Services.AddScoped<IFotoProductoRepo, FotoProductoRepo>();
 builder.Services.AddScoped<IUrlContentProductRepo, UrlContentProductRepo>();
+builder.Services.AddScoped<IGaleriaRepo, GaleriaRepo>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -48,9 +49,7 @@ productos.MapGet("/{id}", Productos.GetById);
 app.Run();
 
 [JsonSerializable(typeof(ProductoDto))]
-[JsonSerializable(typeof(ProductoDto[]))]
-[JsonSerializable(typeof(List<ProductoDto>))]
-[JsonSerializable(typeof(IEnumerable<ProductoDto>))]
+[JsonSerializable(typeof(IEnumerable<ItemPortadaGaleria>))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }

@@ -5,10 +5,15 @@ using Ro.Inventario.Core.Repos;
 
 public static class Productos
 {
-    public static IResult GetAll()
+    public static async Task<IResult> GetAll(
+        IGaleriaRepo galeriaRepo,
+        IConfiguration configuration)
     {
-        var productos = new ProductoDto[] {};
-        return Results.Ok(productos);
+        var rows = configuration["Galeria:RowsPorPagina"];
+        var items = await galeriaRepo.Page(1, int.Parse(rows?? "0"));
+        
+        
+        return Results.Ok(items.Select(it => it.Item1));
     }
 
     public static async Task<IResult> GetById(int id, 
