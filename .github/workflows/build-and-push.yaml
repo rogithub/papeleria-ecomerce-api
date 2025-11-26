@@ -54,3 +54,7 @@ jobs:
           push: true
           platforms: linux/arm64 # ¡Construimos para tu Raspberry Pi!
           tags: ghcr.io/rogithub/ro.inventario.api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1

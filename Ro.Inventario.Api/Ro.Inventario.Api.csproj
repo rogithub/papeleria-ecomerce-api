@@ -7,8 +7,10 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <!-- Habilitar AOT -->
     <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
     <StripSymbols>true</StripSymbols>
-    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
