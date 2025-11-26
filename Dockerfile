@@ -52,4 +52,6 @@ RUN echo "=== EN RUNTIME ===" && \
 
 
 EXPOSE 8080
-ENTRYPOINT ["./Ro.Inventario.Api"]
+#ENTRYPOINT ["./Ro.Inventario.Api"]
+# Al final del Dockerfile, en lugar de ENTRYPOINT:
+CMD ["/bin/bash", "-c", "ls -la && pwd && file ./Ro.Inventario.Api && echo 'Binario verificado'"]
