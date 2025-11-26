@@ -30,7 +30,23 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+      
+      - name: Set up NuGet credentials
+        run: |
+          echo "<configuration>
+            <packageSources>
+              <clear />
+              <add key=\"github\" value=\"https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json\" />
+              <add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />
+            </packageSources>
+            <packageSourceCredentials>
+              <github>
+                <add key=\"Username\" value=\"${{ github.actor }}\" />
+                <add key=\"ClearTextPassword\" value=\"${{ secrets.ROCK_TOKEN }}\" />
+              </github>
+            </packageSourceCredentials>
+          </configuration>" > nuget.config
+      
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
