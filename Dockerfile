@@ -17,10 +17,13 @@ RUN dotnet restore "Ro.Inventario.Api/Ro.Inventario.Api.csproj"
 COPY . .
 WORKDIR "/src/Ro.Inventario.Api"
 
-# Publicar SIN AOT
+# Publicar CON AOT para ARM64
 RUN dotnet publish "Ro.Inventario.Api.csproj" \
     -c Release \
-    -o /app/publish    
+    -o /app/publish \
+    /p:PublishAot=true \
+    --runtime linux-arm64 \
+    /p:StripSymbols=true  
 
 # Runtime deps (porque es AOT)
 FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine
