@@ -46,11 +46,6 @@ jobs:
               </github>
             </packageSourceCredentials>
           </configuration>" > nuget.config
-
-      - name: Verify nuget.config exists
-        run: |
-          ls -la
-          cat nuget.config
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5

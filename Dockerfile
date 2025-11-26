@@ -4,6 +4,7 @@ WORKDIR /src
 
 # Copiar archivos de proyecto
 COPY ["Ro.Inventario.Api/Ro.Inventario.Api.csproj", "Ro.Inventario.Api/"]
+COPY nuget.config .
 RUN dotnet restore "Ro.Inventario.Api/Ro.Inventario.Api.csproj"
 
 # Copiar código fuente
