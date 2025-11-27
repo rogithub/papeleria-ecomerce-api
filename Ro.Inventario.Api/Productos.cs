@@ -1,28 +1,17 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Ro.Inventario.Api.Models;
 using Ro.Inventario.Core.Entities;
 using Ro.Inventario.Core.Repos;
 
 public static class Productos
 {
     public static async Task<IResult> GetAll(
-        int pagina, int items,
-        IGaleriaRepo galeriaRepo)
+        int pagina, int items,        
+        IGaleriaRepo galeriaRepo,
+        string? search = null)
     {
-        var res = await galeriaRepo.Page(pagina, items);
-
-        var result = new ProductosPaginadosDTO();
-        result.Productos = res.Select(it => it.Item1);
-        result.Paginacion = res.Select(it => it.Item2).FirstOrDefault() ?? 
-        new PaginationInfo()
-        {
-            PaginaActual = pagina,
-            RowsPorPagina = items,
-            TotalRows = 0,
-            TotalPaginas = 0
-        };
-
+        var result = await galeriaRepo.Busqueda(search, pagina, items);
+        
         return Results.Ok(result);
     }
 

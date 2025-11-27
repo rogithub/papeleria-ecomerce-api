@@ -67,7 +67,8 @@ productos.MapGet("/{id}", Productos.GetById);
 app.Run();
 
 [JsonSerializable(typeof(ProductoDto))]
-[JsonSerializable(typeof(IEnumerable<ItemPortadaGaleria>))]
+[JsonSerializable(typeof(IEnumerable<BusquedaGaleria>))]
+[JsonSerializable(typeof(ProductoGaleria[]))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }
