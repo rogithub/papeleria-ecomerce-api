@@ -36,11 +36,11 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins(
-            
-            "http://localhost:4200",    // Desarrollo local
-            "https://xplaya.com"        // Producción
-        )
+        var allowedOrigins = builder.Configuration
+            .GetSection("AllowedOrigins")
+            .Get<string[]>();
+
+        policy.WithOrigins(allowedOrigins??Array.Empty<string>())
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
