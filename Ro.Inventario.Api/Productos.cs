@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Ro.Inventario.Api.Models;
 using Ro.Inventario.Core.Entities;
+using Ro.Inventario.Api.Models;
 using Ro.Inventario.Core.Repos;
 
 public static class Productos
@@ -10,7 +12,19 @@ public static class Productos
         IGaleriaRepo galeriaRepo)
     {
         var res = await galeriaRepo.Page(pagina, items);
-        return Results.Ok(res.Select(it => it.Item1));
+
+        var result = new ProductosPaginadosDTO();
+        result.Productos = res.Select(it => it.Item1);
+        result.Paginacion = res.Select(it => it.Item2).FirstOrDefault() ?? 
+        new PaginationInfo()
+        {
+            PaginaActual = pagina,
+            RowsPorPagina = items,
+            TotalRows = 0,
+            TotalPaginas = 0
+        };
+
+        return Results.Ok(result);
     }
 
     public static async Task<IResult> GetById(int id, 
