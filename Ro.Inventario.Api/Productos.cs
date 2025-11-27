@@ -6,11 +6,11 @@ using Ro.Inventario.Core.Repos;
 public static class Productos
 {
     public static async Task<IResult> GetAll(
-        int pagina, int items,        
+        int pagina, int rows,        
         IGaleriaRepo galeriaRepo,
         string? search = null)
     {
-        var result = await galeriaRepo.Busqueda(search, pagina, items);
+        var result = await galeriaRepo.Busqueda(search, pagina, rows);
         
         return Results.Ok(result);
     }
