@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Ro.Inventario.Api.Models;
 using Ro.Inventario.Core.Entities;
-using Ro.Inventario.Api.Models;
 using Ro.Inventario.Core.Repos;
 
 public static class Productos
