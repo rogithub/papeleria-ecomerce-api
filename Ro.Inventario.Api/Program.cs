@@ -38,8 +38,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             
-            "http://localhost:4200",          // Desarrollo local
-            "https://inventario.xplaya.com"   // Producción
+            "http://localhost:4200",    // Desarrollo local
+            "https://xplaya.com"        // Producción
         )
               .AllowAnyHeader()
               .AllowAnyMethod();
