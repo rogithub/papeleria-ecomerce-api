@@ -38,6 +38,7 @@ public static class Productos
 
         
         return Results.Ok(new ProductoDto(
+            producto.Id,
             producto.Nid,
             producto.Nombre,
             producto.PrecioVenta,
@@ -51,9 +52,10 @@ public static class Productos
 }
 
 public record ProductoDto(
-    int Id, 
+    Guid Id,
+    int Nid, 
     string Nombre, 
-    decimal Precio,
+    decimal PrecioVenta,
     string UnidadMedida,
     string Categoria,
     decimal Stock,
