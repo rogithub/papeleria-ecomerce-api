@@ -8,9 +8,12 @@ public static class Productos
     public static async Task<IResult> GetAll(
         int pagina, int rows,        
         IGaleriaRepo galeriaRepo,
+        ILogger<Program> logger,
         string? search = null)
     {
         var result = await galeriaRepo.Busqueda(search, pagina, rows);
+        logger.LogInformation("Visita: página {pagina}, búsqueda: '{search}'", 
+            pagina, search ?? string.Empty);
         
         return Results.Ok(result);
     }
