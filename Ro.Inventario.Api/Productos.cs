@@ -1,6 +1,3 @@
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Ro.Inventario.Core.Entities;
 using Ro.Inventario.Core.Repos;
 
 public static class Productos
@@ -11,15 +8,25 @@ public static class Productos
         ILogger<Program> logger,
         string? search = null)
     {
-        // Truncar a 150 caracteres si excede
-        if (search != null && search.Length > 150)
+        pagina = Math.Max(1, Math.Min(pagina, 10000));
+        rows = Math.Max(1, Math.Min(rows, 100));
+
+        // Truncar a 150 caracteres
+        if (!string.IsNullOrWhiteSpace(search))
+        {           
+            search = search.Length > 150 
+                ? search[..150] 
+                : search;
+            logger.LogInformation("Long search text length: '{len}'", search.Length);
+        }
+        else
         {
-            search = search.Substring(0, 150);
+            search = null;
         }
 
         var result = await galeriaRepo.Busqueda(search, pagina, rows);
-        logger.LogInformation("Visita: página {pagina}, búsqueda: '{search}'", 
-            pagina, search ?? string.Empty);
+        logger.LogInformation("Visita: página {pagina}, rows {rows}, búsqueda: '{search}'", 
+            pagina, rows, search ?? string.Empty);
         
         return Results.Ok(result);
     }
