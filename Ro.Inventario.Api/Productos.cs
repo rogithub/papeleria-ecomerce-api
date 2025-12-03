@@ -8,27 +8,34 @@ public static class Productos
         ILogger<Program> logger,
         string? search = null)
     {
-        pagina = Math.Max(1, Math.Min(pagina, 10000));
-        rows = Math.Max(1, Math.Min(rows, 100));
-
-        // Truncar a 150 caracteres
-        if (!string.IsNullOrWhiteSpace(search))
-        {           
-            search = search.Length > 150 
-                ? search[..150] 
-                : search;
-            logger.LogInformation("Long search text length: '{len}'", search.Length);
-        }
-        else
+        try 
         {
-            search = null;
-        }
+            pagina = Math.Max(1, Math.Min(pagina, 10000));
+            rows = Math.Max(1, Math.Min(rows, 100));
 
-        var result = await galeriaRepo.Busqueda(search, pagina, rows);
-        logger.LogInformation("Visita: página {pagina}, rows {rows}, búsqueda: '{search}'", 
-            pagina, rows, search ?? string.Empty);
-        
-        return Results.Ok(result);
+            // Truncar a 150 caracteres
+            if (!string.IsNullOrWhiteSpace(search))
+            {           
+                search = search.Length > 150 
+                    ? search[..150] 
+                    : search;                
+            }
+            else
+            {
+                search = null;
+            }
+
+            var result = await galeriaRepo.Busqueda(search, pagina, rows);
+            logger.LogInformation("Visita: página {pagina}, rows {rows}, búsqueda: '{search}'", 
+                pagina, rows, search ?? string.Empty);
+            
+            return Results.Ok(result);
+        }
+        catch(Exception ex)
+        {
+            logger.LogError(ex, "Error en GetAll productos");
+            return Results.Problem("Error interno del servidor");
+        }
     }
 
     public static async Task<IResult> GetById(int id, 
