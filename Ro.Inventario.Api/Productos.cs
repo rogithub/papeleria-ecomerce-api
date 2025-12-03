@@ -11,6 +11,12 @@ public static class Productos
         ILogger<Program> logger,
         string? search = null)
     {
+        // Truncar a 150 caracteres si excede
+        if (search != null && search.Length > 150)
+        {
+            search = search.Substring(0, 150);
+        }
+
         var result = await galeriaRepo.Busqueda(search, pagina, rows);
         logger.LogInformation("Visita: página {pagina}, búsqueda: '{search}'", 
             pagina, search ?? string.Empty);
