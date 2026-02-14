@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
-    <PackageReference Include="Ro.Inventario.Core" Version="0.0.6" />
-    <PackageReference Include="Ro.Npgsql.Data" Version="0.0.9" />
+    <PackageReference Include="Ro.Inventario.Core" Version="0.1.4" />
+    <PackageReference Include="Ro.Npgsql.Data" Version="0.1.0" />
   </ItemGroup>
   
 </Project>
