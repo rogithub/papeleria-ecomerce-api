@@ -26,9 +26,11 @@ public static class Pedidos
         if (req.Items == null || req.Items.Length == 0)
             return Results.BadRequest("El pedido debe tener al menos un artículo.");
 
-        // Buscar cliente por teléfono exacto
         var resultados = await clientesRepo.Search(req.Telefono);
-        var cliente = resultados.FirstOrDefault(c => c.Telefono == req.Telefono);
+        var cliente = resultados.FirstOrDefault(c =>
+            c.Telefono != null &&
+            c.Telefono.Length >= 10 &&
+            c.Telefono[^10..] == req.Telefono);
 
         if (cliente == null)
         {
