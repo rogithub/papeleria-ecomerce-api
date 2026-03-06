@@ -27,6 +27,8 @@ builder.Services.AddScoped<IBusquedaProductosRepo, BusquedaProductosRepo>();
 builder.Services.AddScoped<IFotoProductoRepo, FotoProductoRepo>();
 builder.Services.AddScoped<IUrlContentProductRepo, UrlContentProductRepo>();
 builder.Services.AddScoped<IGaleriaRepo, GaleriaRepo>();
+builder.Services.AddScoped<IClientesRepo, ClientesRepo>();
+builder.Services.AddScoped<IPedidosRepo, PedidosRepo>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -59,16 +61,20 @@ if (app.Environment.IsDevelopment())
 
 // Crear grupos de endpoints
 var productos = app.MapGroup("/api/productos");
-
 productos.MapGet("/", Productos.GetAll);
 productos.MapGet("/{id}", Productos.GetById);
 
+var pedidos = app.MapGroup("/api/pedidos");
+pedidos.MapPost("/", Pedidos.Crear);
 
 app.Run();
 
 [JsonSerializable(typeof(ProductoDto))]
 [JsonSerializable(typeof(IEnumerable<BusquedaGaleria>))]
 [JsonSerializable(typeof(ProductoGaleria[]))]
+[JsonSerializable(typeof(CrearPedidoRequest))]
+[JsonSerializable(typeof(PedidoItemRequest[]))]
+[JsonSerializable(typeof(PedidoCreadoResponse))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 }
