@@ -11,6 +11,7 @@ public static class Pedidos
         CrearPedidoRequest req,
         IClientesRepo clientesRepo,
         IPedidosRepo pedidosRepo,
+        ISettingsRepo settings,
         ILogger<Program> logger)
     {
         if (string.IsNullOrWhiteSpace(req.Telefono) ||
@@ -47,9 +48,13 @@ public static class Pedidos
             logger.LogInformation("Cliente existente: {Id} {Telefono}", cliente.Id, cliente.Telefono);
         }
 
+        var anonymousUserSetting = await settings.GetValue("ID_XPLAYA.COM_ANONYMOUS_USER");
+        var anonymousUserId = anonymousUserSetting?.ToGuid() ?? Guid.Empty;
+
         var pedido = new Pedido
         {
             ClienteId = cliente.Id,
+            UserUpdatedId = anonymousUserId,
             Estatus = EstatusPedido.Nuevo,
             Origen = OrigenPedido.EnLinea,
             Items = req.Items.Select(i => new PedidoItem

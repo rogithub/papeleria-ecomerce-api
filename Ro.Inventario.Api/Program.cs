@@ -31,6 +31,7 @@ builder.Services.AddScoped<IUrlContentProductRepo, UrlContentProductRepo>();
 builder.Services.AddScoped<IGaleriaRepo, GaleriaRepo>();
 builder.Services.AddScoped<IClientesRepo, ClientesRepo>();
 builder.Services.AddScoped<IPedidosRepo, PedidosRepo>();
+builder.Services.AddScoped<ISettingsRepo, SettingsRepo>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
