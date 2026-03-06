@@ -3,6 +3,8 @@ using Ro.Inventario.Core.Repos;
 using Ro.Inventario.Core.Entities;
 using Ro.Npgsql.Data;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
